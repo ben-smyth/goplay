@@ -1,0 +1,35 @@
+{
+  "swagger": "2.0",
+  "paths": {
+    "/users": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "users"
+        ],
+        "summary": "Lists all users.",
+        "operationId": "listUsers",
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "500": {
+            "$ref": "#/responses/errorResponse"
+          }
+        }
+      }
+    }
+  },
+  "responses": {
+    "errorResponse": {
+      "description": "",
+      "headers": {
+        "error": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

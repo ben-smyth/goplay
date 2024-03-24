@@ -1,17 +1,45 @@
 package main
 
-import "goplayground/internal/pgdb"
+import (
+	"fmt"
+	"goplayground/api/server"
+	"goplayground/internal/pgdb"
+)
 
 func main() {
-	db := pgdb.Pgdb{
+	dbinfo := pgdb.Pgdb{
 		Address:  "localhost",
 		Port:     5432,
-		Username: "citizix_user",
-		Password: "S3cret",
-		DB:       "citizix_db",
+		Username: "user",
+		Password: "pass",
+		DB:       "db",
 	}
-	err := pgdb.Init(db)
+	db, err := pgdb.Init(dbinfo)
 	if err != nil {
+		fmt.Println(err)
 		return
+	}
+	fmt.Println("Connected to database")
+
+	defer db.Close()
+
+	//	user := pgdb.User{
+	//Username: "testuser",
+	//Password: "testpassword",
+	//Email:    "testuser@example.com",
+	//}
+
+	//err = pgdb.CreateUser(db, user)
+	//if err != nil {
+	//log.Fatal(err)
+	//}
+
+	API := server.App{
+		DB: db,
+	}
+
+	err = server.StartHTTPServer(API)
+	if err != nil {
+		fmt.Println(err)
 	}
 }
