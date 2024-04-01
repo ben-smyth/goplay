@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	server "goplayground/api"
-	"goplayground/internal/pgdb"
+	"goplayground/internal/store/pgdb"
 )
 
 func main() {

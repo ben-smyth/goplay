@@ -11,7 +11,7 @@ func ApplicationHandler(w http.ResponseWriter, r *http.Request) {
 	case http.MethodPost:
 
 	default:
-
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 	}
 }
 
@@ -23,6 +23,11 @@ func ApplicationByName(w http.ResponseWriter, r *http.Request) {
 
 	case http.MethodPatch:
 
-
 	default:
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+}
+}
+
+func ListApplications(w http.ResponseWriter, r *http.Request) {
+	
 }

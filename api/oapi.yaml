@@ -20,6 +20,12 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Application'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
     post:
       summary: Create a new application
       operationId: createApplication
@@ -36,6 +42,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Application'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
   /applications/{name}:
     get:
       summary: Get a single application by Name
@@ -53,6 +65,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Application'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'                
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
     put:
       summary: Update an application by Name
       operationId: updateApplicationByName
@@ -71,6 +89,12 @@ paths:
       responses:
         '200':
           description: Application updated
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
     delete:
       summary: Delete an application by Name
       operationId: deleteApplicationByName
@@ -83,8 +107,22 @@ paths:
       responses:
         '204':
           description: Application deleted
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
 components:
   schemas:
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
     Application:
       type: object
       properties:
@@ -120,4 +158,22 @@ components:
           type: string
         public:
           type: boolean
-
+  responses:
+    BadRequest:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    MethodNotAllowed:
+      description: Method Not Allowed
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'

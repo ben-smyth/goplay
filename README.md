@@ -101,7 +101,7 @@ The general consensus for ORM and/or GORM, is bad. It adds complexity, and obscu
 
 If possible, learning and utilising SQL directly is a better option.
 
-```go
+```golang
 type AppError struct {
 	Id              string `json:"id"`
 	Message         string `json:"message"`               // Message to be display to the end user without debugging information
