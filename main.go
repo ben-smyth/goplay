@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"goplayground/api/server"
+	server "goplayground/api"
 	"goplayground/internal/pgdb"
 )
 

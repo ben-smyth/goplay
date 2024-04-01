@@ -24,6 +24,11 @@ clean: ## Remove compiled files
 test: ## Run tests
 	@echo 'Running tests...'
 
-swagger: ## Generate swagger files
-	@echo 'Generating swagger files...'
-	@swagger generate spec -o ./api/swagger/swagger.json --scan-models
+# swagger: ## Generate swagger files
+# 	@echo 'Generating swagger files...'
+# 	@swagger generate spec -i ./api/oapi.json -o ./api/swagger/swagger.json --scan-models
+
+openapi: ## Generate API Code
+	@echo 'Generate API code and UI from api/oapi.yaml...'
+	@oapi-codegen -package gen -generate models api/oapi.yaml > api/gen/model-gen.go
+	@yq eval api/oapi.yaml -o=json > api/swagger/oapi.json

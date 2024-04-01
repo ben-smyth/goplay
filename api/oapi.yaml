@@ -1,0 +1,123 @@
+---
+openapi: 3.0.0
+info:
+  title: Applications API
+  description: API to manage applications by name.
+  version: "1.0.0"
+servers:
+  - url: http://localhost:8080/api/v1
+paths:
+  /applications:
+    get:
+      summary: List all applications
+      operationId: listApplications
+      responses:
+        '200':
+          description: An array of applications
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Application'
+    post:
+      summary: Create a new application
+      operationId: createApplication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApplicationCreate'
+      responses:
+        '201':
+          description: Application created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Application'
+  /applications/{name}:
+    get:
+      summary: Get a single application by Name
+      operationId: getApplicationByName
+      parameters:
+        - name: name
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A single application
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Application'
+    put:
+      summary: Update an application by Name
+      operationId: updateApplicationByName
+      parameters:
+        - name: name
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApplicationUpdate'
+      responses:
+        '200':
+          description: Application updated
+    delete:
+      summary: Delete an application by Name
+      operationId: deleteApplicationByName
+      parameters:
+        - name: name
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Application deleted
+components:
+  schemas:
+    Application:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        public:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+    ApplicationCreate:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        public:
+          type: boolean
+      required:
+        - name
+        - description
+    ApplicationUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        public:
+          type: boolean
+
