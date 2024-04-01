@@ -1,8 +1,8 @@
 ---
 openapi: 3.0.0
 info:
-  title: Applications API
-  description: API to manage applications by name.
+  title: API
+  description: Random API :)))
   version: "1.0.0"
 servers:
   - url: http://localhost:8080/api/v1
