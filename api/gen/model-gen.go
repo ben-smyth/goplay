@@ -30,6 +30,21 @@ type ApplicationUpdate struct {
 	Public      *bool   `json:"public,omitempty"`
 }
 
+// Error defines model for Error.
+type Error struct {
+	Code    *int32  `json:"code,omitempty"`
+	Message *string `json:"message,omitempty"`
+}
+
+// BadRequest defines model for BadRequest.
+type BadRequest = Error
+
+// MethodNotAllowed defines model for MethodNotAllowed.
+type MethodNotAllowed = Error
+
+// NotFound defines model for NotFound.
+type NotFound = Error
+
 // CreateApplicationJSONRequestBody defines body for CreateApplication for application/json ContentType.
 type CreateApplicationJSONRequestBody = ApplicationCreate
 

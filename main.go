@@ -16,8 +16,7 @@ func main() {
 	}
 	db, err := pgdb.Init(dbinfo)
 	if err != nil {
-		fmt.Println(err)
-		return
+		panic(err)
 	}
 	fmt.Println("Connected to database")
 

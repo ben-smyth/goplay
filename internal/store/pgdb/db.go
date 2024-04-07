@@ -31,7 +31,7 @@ func Init(dbinfo Pgdb) (*sql.DB, error) {
 	}
 
 	// APPLY SCHEMA
-	sqlFile, err := os.ReadFile("internal/pgdb/query/schema.sql")
+	sqlFile, err := os.ReadFile("internal/store/pgdb/query/schema.sql")
 	if err != nil {
 		return nil, err
 	}
