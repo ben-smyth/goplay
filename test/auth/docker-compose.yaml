@@ -14,12 +14,26 @@ services:
     ports:
       - 8081:8080
     depends_on:
-      - db
-  db:
-    image: postgres:14-alpine
+      - postgres
+  postgres-init:
+    image: postgres:14
     volumes:
-      - ./data:/var/lib/postgresql/data
+      - "./data:/data"
+    entrypoint:
+      - sh
+      - -c
+      - |
+        chown -R 1000:1000 /data
+  postgres:
+    depends_on:
+      postgres-init:
+        condition: service_completed_successfully
+    image: postgres:14
     environment:
       POSTGRES_DB: keycloak
       POSTGRES_USER: keycloak
       POSTGRES_PASSWORD: password
+      PGDATA: /pgdata
+    volumes:
+      - "./data:/pgdata"
+    user: "1000"

@@ -141,13 +141,55 @@ CONS:
 
 For now, I don't think it's worth using.
 
-## OAuth
+## OAuth // OIDC
 
-### Examples
+### What they both do 
+#### OAuth 2.0
+- An authorization framework that enables applications to obtain limited acess to user accounts on an HTTP service.
+- It delegates user authentication to the service hosting the user account and authorzing third=party applications to access the user account.
+
+Key components:
+- Resource owner - the end user who owns the data
+- Client - the application requesting access to the users account
+- Authorization server - THe server that authenticates the resource owner and issues access tokens after getting proper authorization
+- Resource server - the server hosting the protected resources. This is the repostiory im working on here in this case. It will accept server requests based on access tokens.
+
+There are certain types of OAuth 2.0 flows that can offer authentication in different ways:
+- Authorization - Used by the clients that can maintain confidentiality of the client secret
+- Implicit - Designed for clients that cannot securely store the client secret
+- Resource owner password credentials - Directly exchange username and password for an access token
+- Client Credentials - Client can request an access token using only its client credentials
+
+
+##### Examples
 An example of web routes with OAuth can be found here:
 https://github.com/mattermost/mattermost/blob/master/server/channels/web/oauth.go
 
 It uses the stdlib. 
+
+#### OIDC
+OIDC is built **on top of oauth** and adds an identity layer. It enables clients (our service in this case) to verify the identity of the end-user based on the authentication performed by an authorization server, and also obtain profile information.
+
+Key features of OIDC
+- ID Token - a JWT that contains the users profile infromation returned from the server
+- UserInfo Endpoint - standard way to obtain user data 
+- Discovery Document - JSON document at a well known URL contains the OIDC provider's config information.
+
+
+#### The differences / Similarities
+OAuth2 provides the foundational authentication mechanism that OIDC builds upon. OIDC introduces an ID token that gives the client a way to authenticate the user.
+
+OIDC is an authentication layer on top of OAuth 2.0.
+
+### Implementation
+This typically invovles redirecting a user to an OIDC provider and then handling the callback from the OIDC provider after authentication is complete.
+
+```go
+import (
+    "golang.org/x/oauth2"
+    "github.com/coreos/go-oidc"
+)
+```
 
 
 ## REST
@@ -194,3 +236,7 @@ The above is a great way to only generate model code - which saves a large chunk
 
 - Can I generate code that also generates swagger comments?
 OAPI yamls have all information required. 
+
+## Running HTTPS
+
+
