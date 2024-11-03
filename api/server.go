@@ -2,8 +2,9 @@ package server
 
 import (
 	"database/sql"
-	"goplayground/api/auth"
+	"fmt"
 	v1 "goplayground/api/v1"
+	"goplayground/web"
 	"net/http"
 )
 
@@ -21,8 +22,8 @@ func StartHTTPServer(app App) error {
 	})
 
 	// Auth
-	mux.HandleFunc("/login", auth.LoginHandler)
-	mux.HandleFunc("/oidc/callback", auth.OidcCallback)
+	// mux.HandleFunc("/login", auth.LoginHandler)
+	// mux.HandleFunc("/oidc/callback", auth.OidcCallback)
 
 	apiPrefix := "/api/v1"
 
@@ -31,6 +32,21 @@ func StartHTTPServer(app App) error {
 	mux.HandleFunc(applicationPrefix, v1.ApplicationHandler)
 	mux.HandleFunc(applicationPrefix+"{name}", v1.ApplicationByName)
 
+	// UI
+	templates := web.PopulateTemplates()
+	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		tmpl := templates.Lookup("index")
+		if tmpl == nil {
+			fmt.Println("template not found")
+			return
+		}
+		err := tmpl.Execute(w, "")
+		if err != nil {
+			w.Write([]byte(err.Error()))
+		}
+	})
+
+	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("web/static"))))
 
 	return http.ListenAndServe(":8080", mux)
 }

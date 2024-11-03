@@ -1,6 +1,7 @@
 package auth
 
 import (
+	"context"
 	"fmt"
 	"net/http"
 
@@ -9,6 +10,7 @@ import (
 )
 
 func OidcCallback(w http.ResponseWriter, r *http.Request) {
+	ctx := context.Background()
 	state := "random"
 	if r.URL.Query().Get("state") != state {
 		http.Error(w, "state did not match", http.StatusBadRequest)

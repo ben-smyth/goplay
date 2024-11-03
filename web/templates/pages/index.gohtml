@@ -1,0 +1,20 @@
+{{ define "index" }}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/styles/styles.css">
+    <title>test</title>
+</head>
+<body>
+    {{template "header" .}}
+    <main>
+        <h2>Home Page</h2>
+        <p class="example">This is the home page of our simple website.</p>
+        <img src="static/images/cat.jpg" alt="kitty">
+    </main>
+    {{template "footer" .}}
+</body>
+</html>
+{{ end }}
