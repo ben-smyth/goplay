@@ -1,0 +1,14 @@
+syntax = "proto3";
+package sample;
+option go_package = "./sample";
+
+message DoRequest {
+	string Item = 1;
+}
+message DoResponse {
+	string Item = 1;
+}
+
+service Runner {
+	rpc Do(DoRequest) returns (DoResponse) {}
+}
